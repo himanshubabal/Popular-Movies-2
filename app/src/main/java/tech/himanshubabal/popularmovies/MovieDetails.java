@@ -4,14 +4,17 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -22,7 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MovieDetails extends AppCompatActivity{
+public class MovieDetails extends AppCompatActivity {
     @BindView(R.id.backdrop_image)
     ImageView backdropImage;
     @BindView(R.id.collapse_toolbar)
@@ -33,6 +36,8 @@ public class MovieDetails extends AppCompatActivity{
     TabLayout tabLayout;
     @BindView(R.id.movie_detail_fragment_container)
     LinearLayout linearLayoutContainer;
+    @BindView(R.id.movie_detail_favourite_fab)
+    FloatingActionButton favFAB;
 
     MovieDBHelper movieDBHelper;
     public Bitmap posterImageBitmap, backdropImageBitmap;
@@ -106,6 +111,27 @@ public class MovieDetails extends AppCompatActivity{
                 //Log.i("debug-movie", String.valueOf(Arrays.asList(reviews)));
             }
         }
+
+        //Add Movie to fav from Movie Details
+        final MovieDBObject object = new MovieDBObject(String.valueOf(db_id), title, overview,
+                releaseDate, rating, posterImageBitmap, backdropImageBitmap, reviews, trailers);
+
+        if (movieDBHelper.getAllMovies().contains(object)) {
+            favFAB.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.favourite_filled));
+        } else {
+            favFAB.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.favorite_blank));
+        }
+
+        favFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (movieDBHelper.getAllMovies().contains(object)){
+                    movieDBHelper.deleteMovie(object.getDb_id());
+                } else {
+                    movieDBHelper.insertMovie(object);
+                }
+            }
+        });
 
         backdropImage.setImageBitmap(backdropImageBitmap);
     }
