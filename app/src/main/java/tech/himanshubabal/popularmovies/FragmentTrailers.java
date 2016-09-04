@@ -1,10 +1,11 @@
 package tech.himanshubabal.popularmovies;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -62,13 +63,14 @@ public class FragmentTrailers extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 String u = trailerObjectList.get(position).getYoutubeID();
-                Bundle bundle = new Bundle();
-                bundle.putString("key", u);
-                FragmentYoutubeVideo fragmentYoutubeVideo = new FragmentYoutubeVideo();
-                fragmentYoutubeVideo.setArguments(bundle);
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.youtube_container, fragmentYoutubeVideo);
-                transaction.commit();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("key", u);
+//                FragmentYoutubeVideo fragmentYoutubeVideo = new FragmentYoutubeVideo();
+//                fragmentYoutubeVideo.setArguments(bundle);
+//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.youtube_container, fragmentYoutubeVideo);
+//                transaction.commit();
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + u)));
             }
 
             @Override

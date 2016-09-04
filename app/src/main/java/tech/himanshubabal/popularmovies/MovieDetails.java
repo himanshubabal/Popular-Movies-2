@@ -25,13 +25,15 @@ import butterknife.ButterKnife;
 public class MovieDetails extends AppCompatActivity{
     @BindView(R.id.backdrop_image)
     ImageView backdropImage;
-    @BindView(R.id.collapse_toolbar) CollapsingToolbarLayout collapsingToolbar;
+    @BindView(R.id.collapse_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.movie_detail_view_pager)
     ViewPager viewPager;
     @BindView(R.id.movie_detail_tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.movie_detail_fragment_container)
     LinearLayout linearLayoutContainer;
+
     MovieDBHelper movieDBHelper;
     public Bitmap posterImageBitmap, backdropImageBitmap;
     public String title, overview, rating, releaseDate;
@@ -100,8 +102,8 @@ public class MovieDetails extends AppCompatActivity{
                 this.reviews = reviews;
                 this.trailers = trailers;
 
-                Log.i("debug-movie", String.valueOf(Arrays.asList(trailers)));
-                Log.i("debug-movie", String.valueOf(Arrays.asList(reviews)));
+                //Log.i("debug-movie", String.valueOf(Arrays.asList(trailers)));
+                //Log.i("debug-movie", String.valueOf(Arrays.asList(reviews)));
             }
         }
 
